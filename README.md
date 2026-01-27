@@ -1,342 +1,364 @@
 # FlareProof
+**Transform blockchain transactions into institutional-grade payment documentation on Flare.**
 
-> Turn any Flare payment into audit-grade proof
+FlareProof is an enterprise payment proof generator that converts Flare Network transactions into ISO 20022-compliant financial records with cryptographically-secured blockchain anchoring. Built to bridge the gap between blockchain transparency and traditional African finance requirements.
 
-FlareProof is an ISO 20022-compliant payment proof generator for the Flare blockchain. It enables users to generate verifiable, shareable payment proofs anchored on-chain.
+---
 
-![FlareProof Banner](https://via.placeholder.com/1200x400/3B82F6/FFFFFF?text=FlareProof+-+ISO+20022+Payment+Proofs+on+Flare)
+## What It Does
 
-## 🎯 Problem
+```
+┌──────────────┐      ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+│   Connect    │      │   Select     │      │   Generate   │      │   Anchor &   │
+│   Wallet     │ ───▶ │   Payments   │ ───▶ │   ISO Proof  │ ───▶ │   Share      │
+└──────────────┘      └──────────────┘      └──────────────┘      └──────────────┘
+```
 
-African freelancers, SMEs, and businesses struggle with:
-- ❌ No standardized way to prove crypto payments
-- ❌ Manual reconciliation chaos
-- ❌ Lack of audit-grade documentation
-- ❌ Difficulty proving payments to clients/tax authorities
+1. **Connect Wallet** - Securely connect your Web3 wallet to retrieve Flare transaction history
+2. **Select Transactions** - Choose specific payments to consolidate into a verifiable proof document
+3. **Generate ISO 20022 Proof** - Create pacs.008 compliant payment message with cryptographic hash
+4. **Anchor On-Chain** - Record proof hash immutably on Flare blockchain
+5. **Export & Share** - Download PDF/XML or share tamper-proof verification URL
 
-## ✨ Solution
+---
 
-FlareProof provides:
-- ✅ **ISO 20022 Compliance**: Industry-standard payment messaging (pacs.008)
-- ✅ **Blockchain Anchoring**: Immutable proof-of-existence on Flare
-- ✅ **Shareable Links**: Anyone can verify without a wallet
-- ✅ **Professional Exports**: PDF and XML downloads for accounting
-- ✅ **Gas Efficient**: Powered by Flare's low transaction costs
+## 🎯 The Problem (Africa Context)
 
-## 🏆 Bounty Tracks
+Across Africa, where blockchain adoption is exploding (**Nigeria processes $56B+ in annual crypto transactions**), a critical infrastructure gap exists:
 
-This project covers:
-- **Track 5**: Proof-of-Payment Share Links ✅
-- **Track 6**: Accounting Dashboard ✅
+- ❌ **Tax Authorities** don't accept blockchain explorer screenshots as valid payment proof
+- ❌ **Auditors and Accountants** can't interpret raw transaction hashes
+- ❌ **Banks and Regulators** require ISO 20022 compliant documentation
+- ❌ **Legal Disputes** lack acceptable evidence for crypto transactions
+- ❌ **Cross-Border Payments** have no standardized proof mechanism
 
-## 🛠 Tech Stack
+**Result**: Blockchain payments are excluded from formal financial systems, hindering business adoption and regulatory compliance.
 
-- **Frontend**: Next.js 14 + TypeScript + App Router
-- **Styling**: Tailwind CSS 3.4 + shadcn/ui
-- **Web3**: Wagmi v2 + Viem v2 + RainbowKit v2
-- **State**: TanStack React Query v5
-- **Blockchain**: Flare Mainnet (Chain ID: 14) + Coston2 Testnet (Chain ID: 114)
-- **PDF Generation**: jsPDF + jspdf-autotable
-- **QR Codes**: qrcode.react
+---
 
-## 🚀 Quick Start
+## ✅ The Solution
+
+FlareProof generates **ISO 20022 pacs.008 compliant payment proofs** that:
+
+✅ **Meet Banking Standards** - Same format banks use globally for financial messaging
+✅ **Anchored On-Chain** - Cryptographic hash stored permanently on Flare for verification
+✅ **Universally Accessible** - Verification links work WITHOUT wallet or blockchain knowledge
+✅ **Audit-Ready** - Professional PDF/XML exports integrate with accounting software
+✅ **Cost-Effective** - Powered by Flare's low transaction costs (fractions of a cent)
+
+---
+
+## Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ and npm 9+
-- MetaMask or compatible Web3 wallet
-- Flare (FLR) or Coston2 (C2FLR) testnet tokens
+- **Node.js 18+** with npm
+- **Flare Wallet** (MetaMask, Rabby, etc.) with:
+  - Some FLR for gas (for anchoring proofs)
+  - Transaction history on Flare network
 
-### Installation
+### 1. Clone and Setup
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/flareproof
+git clone https://github.com/Sandijigs/flareproof.git
 cd flareproof
-
-# Install dependencies
 npm install
-
-# Install shadcn/ui components (REQUIRED)
-npx shadcn-ui@latest add button card dialog table toast skeleton badge input checkbox progress separator tabs dropdown-menu
-
-# Copy environment variables
-cp .env.example .env.local
 ```
 
-### Environment Setup
+### 2. Environment Configuration
 
-Edit `.env.local` with your values:
+Create `.env` in the project root:
 
 ```env
-# Get your WalletConnect Project ID from https://cloud.walletconnect.com/
-NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id_here
-
-# Deploy ProofAnchor.sol contract first (see Contract Deployment below)
-NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS=0x...deployed_contract_address
-
-# Your app URL
+# Required
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_walletconnect_project_id
+NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS=0xD4bc1A02aF9F2990698D8D13Be2F88F10B65F5dF
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-
-# Default chain (114 for Coston2 testnet, 14 for Flare mainnet)
 NEXT_PUBLIC_DEFAULT_CHAIN=114
+
+# Optional (for contract deployment)
+PRIVATE_KEY=your_wallet_private_key_for_deployment
 ```
 
-### Run Development Server
+**Get WalletConnect Project ID**: https://cloud.walletconnect.com/
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the app.
+Open **http://localhost:3000** in your browser.
 
-## 📜 Contract Deployment
+### 4. Test It!
 
-### Using Remix IDE (Recommended)
+1. Click **"Connect Wallet"** and switch to Flare/Coston2 network
+2. View your transaction history automatically loaded
+3. **Select transactions** using checkboxes
+4. Click **"Generate Proof"** to create ISO 20022 message
+5. Click **"Anchor Proof"** and sign the transaction
+6. **Download PDF/XML** or **copy verification link** to share
+7. Open verification link in incognito mode - works without wallet!
 
-1. Go to [Remix IDE](https://remix.ethereum.org/)
-2. Create new file `ProofAnchor.sol`
-3. Copy contract code from `contracts/ProofAnchor.sol`
-4. Compile with Solidity 0.8.20+
-5. Deploy to network:
-
-**Coston2 Testnet (for testing):**
-- Network Name: Coston2
-- RPC URL: `https://coston2-api.flare.network/ext/C/rpc`
-- Chain ID: 114
-- Currency: C2FLR
-- Explorer: https://coston2-explorer.flare.network
-
-**Flare Mainnet (for production):**
-- Network Name: Flare
-- RPC URL: `https://flare-api.flare.network/ext/C/rpc`
-- Chain ID: 14
-- Currency: FLR
-- Explorer: https://flare-explorer.flare.network
-
-6. Get Testnet Tokens:
-   - Coston2 Faucet: https://faucet.flare.network/coston2
-
-7. Copy deployed address to `.env.local`:
-```env
-NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS=0x...your_deployed_address
-```
-
-### Verify Contract (Optional)
-
-After deployment, verify on block explorer for transparency:
-1. Go to explorer (coston2-explorer.flare.network or flare-explorer.flare.network)
-2. Find your contract address
-3. Click "Verify & Publish"
-4. Upload `ProofAnchor.sol` and verify
-
-## 📖 Usage Guide
-
-### 1. Connect Wallet
-
-- Click "Connect Wallet"
-- Select your wallet (MetaMask, WalletConnect, etc.)
-- Approve the connection
-- Ensure you're on Flare or Coston2 network
-
-### 2. View Transactions
-
-- Dashboard automatically loads your recent transactions
-- Filter by date, type, or status
-- See transaction details including amount, timestamp, gas
-
-### 3. Generate Proof
-
-- Select one or more transactions (checkbox)
-- Click "Generate Proof"
-- Review transaction summary
-- Confirm proof generation
-
-### 4. Anchor on Blockchain
-
-- After generation, click "Anchor Proof"
-- Approve the transaction in your wallet
-- Wait for confirmation (usually < 10 seconds on Flare)
-- Proof is now immutably recorded on-chain
-
-### 5. Share Proof
-
-- Copy the shareable link
-- Share via email, messaging, or QR code
-- Recipients can verify WITHOUT connecting a wallet
-- Proof shows as "Verified ✓" if anchored
-
-### 6. Download Exports
-
-- **PDF**: Professional proof document
-- **XML**: ISO 20022 compliant format for accounting software
-- **JSON**: Raw proof data for developers
-
-## 🏗 Architecture
-
-```
-┌─────────────────┐
-│   Next.js App   │
-│   (Frontend)    │
-└────────┬────────┘
-         │
-         ├──> Flare RPC (Read Transactions)
-         │
-         ├──> ProofAnchor Contract (Write Proofs)
-         │
-         └──> Local Storage (Cache Proofs)
-
-User Flow:
-1. Connect Wallet → 2. Fetch Transactions → 3. Generate ISO 20022 Proof
-4. Anchor Hash On-Chain → 5. Share Link → 6. Anyone Verifies
-```
+---
 
 ## 📁 Project Structure
 
 ```
 flareproof/
-├── app/                        # Next.js App Router pages
-│   ├── layout.tsx              # Root layout with providers
-│   ├── page.tsx                # Landing/Dashboard page
-│   ├── globals.css             # Global styles
-│   ├── dashboard/              # Transaction dashboard
-│   ├── proof/[id]/             # Public verification page
-│   └── api/                    # API routes (if needed)
+├── app/                          # Next.js App Router
+│   ├── layout.tsx                # Root layout with Web3 providers
+│   ├── page.tsx                  # Landing + Dashboard page
+│   ├── globals.css               # Tailwind styles
+│   └── proof/[id]/               # Public verification page (no wallet)
+│       └── page.tsx
 ├── components/
-│   ├── ui/                     # shadcn/ui components
-│   ├── providers.tsx           # Wagmi/RainbowKit/Query providers
-│   ├── transactions/           # Transaction components
-│   ├── proof/                  # Proof components
-│   └── layout/                 # Layout components
+│   ├── providers.tsx             # Wagmi + RainbowKit + ReactQuery setup
+│   ├── transaction-table.tsx    # Transaction list with selection
+│   ├── proof-generation-modal.tsx # 3-step proof generation flow
+│   ├── proof-list.tsx            # View saved proofs
+│   └── ui/                       # shadcn/ui components
 ├── hooks/
-│   ├── use-transactions.ts     # Fetch transactions
-│   ├── use-proof-generator.ts  # Generate proofs
-│   └── use-anchor-proof.ts     # Anchor proofs
+│   ├── use-transactions.ts       # Fetch Flare transaction history
+│   ├── use-proof-generator.ts    # Generate ISO 20022 messages
+│   └── use-anchor-proof.ts       # Smart contract interaction
 ├── lib/
-│   ├── chains.ts               # Flare chain definitions
-│   ├── wagmi-config.ts         # Wagmi configuration
-│   ├── iso20022.ts             # ISO message generator
-│   ├── pdf-generator.ts        # PDF proof generator
-│   ├── utils.ts                # Utilities
-│   └── constants.ts            # App constants
-├── types/
-│   ├── transaction.ts          # Transaction types
-│   ├── proof.ts                # Proof types
-│   └── iso20022.ts             # ISO 20022 types
+│   ├── chains.ts                 # Flare/Coston2 chain definitions
+│   ├── wagmi-config.ts           # Wagmi v2 configuration
+│   ├── iso20022.ts               # ISO 20022 pacs.008 XML generator
+│   ├── pdf-generator.ts          # jsPDF proof document creator
+│   ├── constants.ts              # Block explorers, RPC URLs
+│   └── utils.ts                  # Utility functions
 ├── contracts/
-│   └── ProofAnchor.sol         # Smart contract
-└── public/                     # Static assets
+│   └── ProofAnchor.sol           # Smart contract (Solidity 0.8.20)
+├── types/
+│   ├── transaction.ts            # Transaction type definitions
+│   ├── proof.ts                  # Proof data structures
+│   └── iso20022.ts               # ISO message types
+└── scripts/
+    └── deploy.js                 # Hardhat deployment script
 ```
 
-## 🧪 Testing
+---
 
-### Manual Testing Checklist
+## 🔗 API Reference (Frontend Hooks)
 
-- [ ] Wallet connects successfully
-- [ ] Transactions load from Flare
-- [ ] Can select multiple transactions
-- [ ] Proof generates with correct ISO 20022 format
-- [ ] Hash anchors successfully on blockchain
-- [ ] Public verification page loads without wallet
-- [ ] PDF downloads correctly
-- [ ] XML is valid ISO 20022 format
-- [ ] QR code scans to correct URL
-- [ ] Responsive on mobile/tablet/desktop
-- [ ] Dark mode works correctly
+### `useTransactions()`
 
-### Test on Coston2 Testnet
+```typescript
+const { data: transactions, isLoading } = useTransactions()
+// Returns: Array of Flare transactions for connected wallet
+```
 
-1. Get C2FLR from faucet
-2. Make test transactions
-3. Generate and anchor proofs
-4. Verify everything works before mainnet
+### `useProofGenerator()`
+
+```typescript
+const { generateProof } = useProofGenerator()
+const proof = await generateProof(selectedTransactions)
+// Returns: { id, hash, iso20022Message, transactions }
+```
+
+### `useAnchorProof()`
+
+```typescript
+const { mutate: anchorProof } = useAnchorProof()
+anchorProof({ proofHash: '0x...', proofId: 'FP-2026-0126-XWN8' })
+// Anchors proof hash on ProofAnchor smart contract
+```
+
+### `useProofById(proofId)`
+
+```typescript
+const { data: proof } = useProofById('FP-2026-0126-XWN8')
+// Returns: { exists, proofHash, creator, timestamp }
+```
+
+---
+
+## 🛠 Configuration Reference
+
+### Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | ✅ | WalletConnect project ID from cloud.walletconnect.com |
+| `NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS` | ✅ | Deployed ProofAnchor contract address |
+| `NEXT_PUBLIC_APP_URL` | ✅ | Application URL for verification links |
+| `NEXT_PUBLIC_DEFAULT_CHAIN` | ✅ | `114` (Coston2) or `14` (Flare mainnet) |
+| `PRIVATE_KEY` | ❌ | Wallet private key (only for contract deployment) |
+
+### Network Details
+
+**Coston2 Testnet:**
+- RPC: `https://coston2-api.flare.network/ext/C/rpc`
+- Chain ID: `114`
+- Currency: C2FLR
+- Explorer: https://coston2-explorer.flare.network
+- Faucet: https://faucet.flare.network/coston2
+
+**Flare Mainnet:**
+- RPC: `https://flare-api.flare.network/ext/C/rpc`
+- Chain ID: `14`
+- Currency: FLR
+- Explorer: https://flare-explorer.flare.network
+
+---
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Deploy to Vercel
 
 ```bash
 # Install Vercel CLI
 npm i -g vercel
 
 # Deploy
-vercel
+vercel --prod
 
-# Set environment variables in Vercel dashboard
-# NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
-# NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS
-# NEXT_PUBLIC_APP_URL
+# Set environment variables in Vercel dashboard:
+# - NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID
+# - NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS
+# - NEXT_PUBLIC_APP_URL (use your Vercel URL)
+# - NEXT_PUBLIC_DEFAULT_CHAIN=14 (for mainnet)
 ```
 
-### Environment Variables for Production
+### Deploy Smart Contract
 
-```env
-NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id
-NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS=0x...mainnet_contract
-NEXT_PUBLIC_APP_URL=https://your-domain.vercel.app
-NEXT_PUBLIC_DEFAULT_CHAIN=14  # Use Flare Mainnet
+**Using Hardhat (from this repo):**
+
+```bash
+# Install Hardhat dependencies
+npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox
+
+# Create .env with PRIVATE_KEY (see step 2 above)
+
+# Deploy to Coston2 testnet
+npx hardhat run scripts/deploy.js --network coston2
+
+# Copy the deployed address to your .env file
 ```
 
-## 🎥 Demo
+**Using Remix IDE (alternative):**
 
-- **Live Demo**: [https://flareproof.vercel.app](https://flareproof.vercel.app)
-- **Video Walkthrough**: [YouTube Link](#)
-- **Contract on Coston2**: [Explorer Link](#)
-
-## 📊 Features Breakdown
-
-### Track 5: Proof-of-Payment Share Links ✅
-
-- ✅ Generate shareable verification links
-- ✅ QR code generation for easy sharing
-- ✅ Public verification page (no wallet required)
-- ✅ Real-time blockchain verification
-- ✅ Transaction details display
-
-### Track 6: Accounting Dashboard ✅
-
-- ✅ Transaction history with filtering
-- ✅ ISO 20022 compliant export (XML)
-- ✅ PDF proof generation
-- ✅ Transaction statistics
-- ✅ Audit-grade documentation
-
-## 🔐 Security
-
-- ✅ No private keys stored
-- ✅ Read-only blockchain access for transactions
-- ✅ Smart contract is immutable after deployment
-- ✅ Proofs cannot be deleted or modified
-- ✅ Open source and verifiable
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) file
-
-## 🙏 Acknowledgments
-
-- **Flare Network** for the blockchain infrastructure
-- **ProofRails** for the bounty opportunity
-- **shadcn/ui** for the component library
-- **RainbowKit** for wallet integration
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/flareproof/issues)
-- **Twitter**: [@flareproof](#)
-- **Email**: support@flareproof.xyz
+1. Open https://remix.ethereum.org/
+2. Create `ProofAnchor.sol` and paste code from `contracts/ProofAnchor.sol`
+3. Compile with Solidity 0.8.20+
+4. Deploy using Injected Provider (MetaMask) on Coston2 or Flare
+5. Copy deployed address to `.env`
 
 ---
 
-**Built with ❤️ for the Flare Africa Builder Bounty**
+## 🔐 Security Notes
 
-*Transform your Flare payments into audit-grade proof of payment records*
+- ✅ **Never commit `.env` files** - they contain private keys and are in `.gitignore`
+- ✅ **Use dedicated deployment wallet** - keep minimal FLR for gas
+- ✅ **Validate all inputs** - smart contract validates proof hashes and IDs
+- ✅ **No wallet data stored** - all proofs anchored on-chain only
+- ✅ **Open source contract** - verify on block explorer for transparency
+
+---
+
+## 🎯 Use Cases (African Context)
+
+### 1. Small Business Tax Compliance
+**Scenario**: Nigerian fashion designer accepts crypto from diaspora customers
+**Solution**: Generate ISO 20022 proofs that satisfy Nigerian Federal Inland Revenue Service (FIRS) for tax filing
+
+### 2. Cross-Border Trade Documentation
+**Scenario**: Ghanaian farmer co-op receives payment from South African importer
+**Solution**: Provide legally-recognized proof of payment for customs and dispute resolution
+
+### 3. Remittance Income Verification
+**Scenario**: Family receives crypto remittances and needs proof for visa/loan application
+**Solution**: Generate audit-grade documentation proving legitimate income source
+
+### 4. Fintech Compliance Automation
+**Scenario**: Neo-bank building in Kenya needs compliant records for all crypto transactions
+**Solution**: Integrate FlareProof API to auto-generate proofs, reducing regulatory risk
+
+---
+
+## 🚧 Current Limitations (MVP)
+
+- **Flare Only**: Works with Flare and Coston2 networks only (no multi-chain yet)
+- **Manual Selection**: User must manually select transactions to include
+- **LocalStorage Proofs**: Generated proofs stored in browser localStorage
+- **Basic UI**: Functional design focused on core features
+- **English Only**: Interface currently in English only
+
+---
+
+## 🗺 Possible Roadmap
+
+### v1.1 - Enhanced Features
+- [ ] QR code sharing for mobile verification
+- [ ] Email export of proofs
+- [ ] Batch proof generation for multiple wallet addresses
+- [ ] Additional ISO 20022 message types (pain.001, camt.053)
+
+### v1.2 - Enterprise
+- [ ] API access for fintech integrations
+- [ ] Multi-wallet management dashboard
+- [ ] CSV/JSON export for accounting software
+- [ ] Webhook notifications for proof anchoring
+
+### v1.3 - Compliance & Scale
+- [ ] Multi-chain support (Ethereum, Polygon, etc.)
+- [ ] Proof verification API for third parties
+- [ ] Automated tax reporting integrations
+- [ ] Localization (French, Swahili, Arabic)
+
+---
+
+## 🏆 Built For
+
+**Flare Africa Builder Bounty**
+
+This project addresses real-world documentation gaps preventing blockchain adoption in African economies where trust, compliance, and audit-ready records are critical for business legitimacy.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+## 🔗 Resources
+
+- **Live Demo**: https://flareproof-6myyt9vyt-oghenerukevwe-sandra-idjigheres-projects.vercel.app
+- **Smart Contract**: `0xD4bc1A02aF9F2990698D8D13Be2F88F10B65F5dF` (Coston2)
+- **Flare Documentation**: https://docs.flare.network
+- **ISO 20022 Standard**: https://www.iso20022.org
+- **ProofRails Bounty**: https://proofrails.com
+
+---
+
+## 👥 Team
+
+Built by **Sandra Idjighere** for the Flare Africa Builder Bounty
+
+---
+
+## 📧 Support
+
+- **GitHub Issues**: https://github.com/Sandijigs/flareproof/issues
+- **Twitter**: [@SandraIdjighere](#)
+
+---
+
+**🌍 Built with ❤️ for African blockchain adoption**
+
+*Bridging blockchain transparency with traditional finance requirements*
