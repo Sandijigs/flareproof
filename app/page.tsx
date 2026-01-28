@@ -223,7 +223,7 @@ function LandingPage() {
 
           <div className="pt-8 border-t border-slate-200 dark:border-slate-800 text-center">
             <p className="text-sm text-slate-500 dark:text-slate-500">
-              Built for the Flare Africa Builder Bounty • Powered by Flare Network
+              Powered by Flare Network
             </p>
             <p className="text-xs text-slate-400 dark:text-slate-600 mt-2">
               © 2026 FlareProof. No wallet data is stored on our servers. All proofs are anchored on-chain.

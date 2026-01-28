@@ -1,4 +1,5 @@
 # FlareProof
+
 **Transform blockchain transactions into institutional-grade payment documentation on Flare.**
 
 FlareProof is an enterprise payment proof generator that converts Flare Network transactions into ISO 20022-compliant financial records with cryptographically-secured blockchain anchoring. Built to bridge the gap between blockchain transparency and traditional African finance requirements.
@@ -146,30 +147,30 @@ flareproof/
 ### `useTransactions()`
 
 ```typescript
-const { data: transactions, isLoading } = useTransactions()
+const { data: transactions, isLoading } = useTransactions();
 // Returns: Array of Flare transactions for connected wallet
 ```
 
 ### `useProofGenerator()`
 
 ```typescript
-const { generateProof } = useProofGenerator()
-const proof = await generateProof(selectedTransactions)
+const { generateProof } = useProofGenerator();
+const proof = await generateProof(selectedTransactions);
 // Returns: { id, hash, iso20022Message, transactions }
 ```
 
 ### `useAnchorProof()`
 
 ```typescript
-const { mutate: anchorProof } = useAnchorProof()
-anchorProof({ proofHash: '0x...', proofId: 'FP-2026-0126-XWN8' })
+const { mutate: anchorProof } = useAnchorProof();
+anchorProof({ proofHash: "0x...", proofId: "FP-2026-0126-XWN8" });
 // Anchors proof hash on ProofAnchor smart contract
 ```
 
 ### `useProofById(proofId)`
 
 ```typescript
-const { data: proof } = useProofById('FP-2026-0126-XWN8')
+const { data: proof } = useProofById("FP-2026-0126-XWN8");
 // Returns: { exists, proofHash, creator, timestamp }
 ```
 
@@ -179,17 +180,18 @@ const { data: proof } = useProofById('FP-2026-0126-XWN8')
 
 ### Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | ✅ | WalletConnect project ID from cloud.walletconnect.com |
-| `NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS` | ✅ | Deployed ProofAnchor contract address |
-| `NEXT_PUBLIC_APP_URL` | ✅ | Application URL for verification links |
-| `NEXT_PUBLIC_DEFAULT_CHAIN` | ✅ | `114` (Coston2) or `14` (Flare mainnet) |
-| `PRIVATE_KEY` | ❌ | Wallet private key (only for contract deployment) |
+| Variable                               | Required | Description                                           |
+| -------------------------------------- | -------- | ----------------------------------------------------- |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | ✅       | WalletConnect project ID from cloud.walletconnect.com |
+| `NEXT_PUBLIC_PROOF_ANCHOR_ADDRESS`     | ✅       | Deployed ProofAnchor contract address                 |
+| `NEXT_PUBLIC_APP_URL`                  | ✅       | Application URL for verification links                |
+| `NEXT_PUBLIC_DEFAULT_CHAIN`            | ✅       | `114` (Coston2) or `14` (Flare mainnet)               |
+| `PRIVATE_KEY`                          | ❌       | Wallet private key (only for contract deployment)     |
 
 ### Network Details
 
 **Coston2 Testnet:**
+
 - RPC: `https://coston2-api.flare.network/ext/C/rpc`
 - Chain ID: `114`
 - Currency: C2FLR
@@ -197,6 +199,7 @@ const { data: proof } = useProofById('FP-2026-0126-XWN8')
 - Faucet: https://faucet.flare.network/coston2
 
 **Flare Mainnet:**
+
 - RPC: `https://flare-api.flare.network/ext/C/rpc`
 - Chain ID: `14`
 - Currency: FLR
@@ -248,61 +251,48 @@ npx hardhat run scripts/deploy.js --network coston2
 
 ---
 
-## 🔐 Security Notes
-
-- ✅ **Never commit `.env` files** - they contain private keys and are in `.gitignore`
-- ✅ **Use dedicated deployment wallet** - keep minimal FLR for gas
-- ✅ **Validate all inputs** - smart contract validates proof hashes and IDs
-- ✅ **No wallet data stored** - all proofs anchored on-chain only
-- ✅ **Open source contract** - verify on block explorer for transparency
-
----
-
 ## 🎯 Use Cases (African Context)
 
 ### 1. Small Business Tax Compliance
+
 **Scenario**: Nigerian fashion designer accepts crypto from diaspora customers
 **Solution**: Generate ISO 20022 proofs that satisfy Nigerian Federal Inland Revenue Service (FIRS) for tax filing
 
 ### 2. Cross-Border Trade Documentation
+
 **Scenario**: Ghanaian farmer co-op receives payment from South African importer
 **Solution**: Provide legally-recognized proof of payment for customs and dispute resolution
 
 ### 3. Remittance Income Verification
+
 **Scenario**: Family receives crypto remittances and needs proof for visa/loan application
 **Solution**: Generate audit-grade documentation proving legitimate income source
 
 ### 4. Fintech Compliance Automation
+
 **Scenario**: Neo-bank building in Kenya needs compliant records for all crypto transactions
 **Solution**: Integrate FlareProof API to auto-generate proofs, reducing regulatory risk
-
----
-
-## 🚧 Current Limitations (MVP)
-
-- **Flare Only**: Works with Flare and Coston2 networks only (no multi-chain yet)
-- **Manual Selection**: User must manually select transactions to include
-- **LocalStorage Proofs**: Generated proofs stored in browser localStorage
-- **Basic UI**: Functional design focused on core features
-- **English Only**: Interface currently in English only
 
 ---
 
 ## 🗺 Possible Roadmap
 
 ### v1.1 - Enhanced Features
+
 - [ ] QR code sharing for mobile verification
 - [ ] Email export of proofs
 - [ ] Batch proof generation for multiple wallet addresses
 - [ ] Additional ISO 20022 message types (pain.001, camt.053)
 
 ### v1.2 - Enterprise
+
 - [ ] API access for fintech integrations
 - [ ] Multi-wallet management dashboard
 - [ ] CSV/JSON export for accounting software
 - [ ] Webhook notifications for proof anchoring
 
 ### v1.3 - Compliance & Scale
+
 - [ ] Multi-chain support (Ethereum, Polygon, etc.)
 - [ ] Proof verification API for third parties
 - [ ] Automated tax reporting integrations
@@ -311,8 +301,6 @@ npx hardhat run scripts/deploy.js --network coston2
 ---
 
 ## 🏆 Built For
-
-**Flare Africa Builder Bounty**
 
 This project addresses real-world documentation gaps preventing blockchain adoption in African economies where trust, compliance, and audit-ready records are critical for business legitimacy.
 
@@ -361,4 +349,4 @@ Built by **Sandra Idjighere** for the Flare Africa Builder Bounty
 
 **🌍 Built with ❤️ for African blockchain adoption**
 
-*Bridging blockchain transparency with traditional finance requirements*
+_Bridging blockchain transparency with traditional finance requirements_
